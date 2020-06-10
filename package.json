@@ -1,8 +1,43 @@
 {
-    "name": "@kronos-integration/interceptor-webhook",
-    "main": "./src/webhook.mjs",
-    "dependencies": {
-        "@kronos-integration/interceptor": "^9.2.1"
-      }
-    
+  "name": "@kronos-integration/interceptor-webhook",
+  "version": "0.0.0-semantic-release",
+  "sideEffects": false,
+  "type": "module",
+  "main": "./src/webhook.mjs",
+  "exports": {
+    ".": "./src/webhook.mjs"
+  },
+  "description": "interceptor for web hooks",
+  "keywords": [
+    "kronos-interceptor"
+  ],
+  "scripts": {
+    "cover": "--overwrite-- c8 -x 'tests/**/*' --temp-directory build/tmp ava --timeout 2m && c8 report -r lcov -o build/coverage --temp-directory build/tmp",
+    "test": "ava --timeout 2m",
+    "docs": "--overwrite-- documentation readme ./src/webhook.mjs --section=API",
+    "lint": "--overwrite-- documentation lint ./src/webhook.mjs"
+  },
+  "dependencies": {
+    "@kronos-integration/interceptor": "^9.2.1"
+  },
+  "devDependencies": {
+    "c8": "^7.1.2",
+    "ava": "^3.8.2",
+    "documentation": "^13.0.1",
+    "semantic-release": "^17.0.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kronos-Integration/interceptor-webhook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kronos-Integration/interceptor-webhook/issues"
+  },
+  "homepage": "https://github.com/Kronos-Integration/interceptor-webhook#readme",
+  "template": {
+    "inheritFrom": [
+      "arlac77/template-github",
+      "arlac77/template-kronos-component"
+    ]
+  }
 }
