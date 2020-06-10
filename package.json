@@ -1,0 +1,8 @@
+{
+    "name": "@kronos-integration/interceptor-webhook",
+    "main": "./src/webhook.mjs",
+    "dependencies": {
+        "@kronos-integration/interceptor": "^9.2.1"
+      }
+    
+}
