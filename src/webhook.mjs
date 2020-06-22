@@ -1,8 +1,6 @@
 import { createHmac } from "crypto";
 import { Interceptor } from '@kronos-integration/interceptor';
 
-
-
 /**
  *
  */
