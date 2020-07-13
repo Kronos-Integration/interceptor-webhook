@@ -58,7 +58,6 @@ export class BitbucketHookInterceptor extends Interceptor {
 
   async receive(endpoint, next, request) {
     const [event] = headers(request, ["X-Event-Key"]);
-
     const body = await rawBody(ctx.req);
     const data = JSON.parse(body.toString());
 
@@ -77,12 +76,10 @@ function headers(ctx, names) {
 }
 
 function sign(data, secret) {
-  return (
-    "sha1=" +
+  return "sha1=" +
     createHmac("sha1", secret)
       .update(data)
-      .digest("hex")
-  );
+      .digest("hex");
 }
 
 function verify(signature, data, secret) {
