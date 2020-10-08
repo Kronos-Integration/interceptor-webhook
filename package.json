@@ -20,7 +20,7 @@
     "lint:docs": "documentation lint ./src/webhook.mjs"
   },
   "dependencies": {
-    "@kronos-integration/interceptor": "^10.0.6"
+    "@kronos-integration/interceptor": "^10.0.8"
   },
   "devDependencies": {
     "ava": "^3.13.0",
