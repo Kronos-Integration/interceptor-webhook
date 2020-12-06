@@ -33,7 +33,7 @@
     "@kronos-integration/interceptor": "^10.2.0"
   },
   "devDependencies": {
-    "@kronos-integration/endpoint": "^9.2.20",
+    "@kronos-integration/endpoint": "^9.3.0",
     "ava": "^3.13.0",
     "c8": "^7.3.5",
     "documentation": "github:arlac77/documentation",
