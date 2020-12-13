@@ -23,8 +23,19 @@ test("github", async t => {
     body: githubPushBody
   });
 
-  await interceptor.receive(endpoint, (ctx) => { }, ctx);
+  let myEvent, myData;
 
+  await interceptor.receive(
+    endpoint,
+    (data, event) => {
+      myData = data;
+      myEvent = event;
+    },
+    ctx
+  );
+
+  t.is(myEvent, "push");
+  t.is(myData.repository.name, "npm-template-sync-github-hook");
   t.pass();
 });
 
@@ -42,9 +53,8 @@ test("github missing signature header", async t => {
   });
 
   try {
-    await interceptor.receive(endpoint, (ctx) => { }, ctx);
-  }
-  catch(e) {
+    await interceptor.receive(endpoint, (data, event) => {}, ctx);
+  } catch (e) {
     t.log(e);
     t.pass();
   }
