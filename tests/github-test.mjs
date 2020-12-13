@@ -1,15 +1,16 @@
 import test from "ava";
 import { TestContext } from "./helpers/context.mjs";
-import { signer } from "./helpers/signer.mjs";
 import { SendEndpoint } from "@kronos-integration/endpoint";
-import { GithubHookInterceptor } from "@kronos-integration/interceptor-webhook";
+import {
+  GithubHookInterceptor,
+  sign
+} from "@kronos-integration/interceptor-webhook";
 
 export const secret = "aSecret";
 
 test("github", async t => {
-  const signature = signer( Buffer.from(githubPushBody), "sha1", secret);
-
-  const endpoint = new SendEndpoint("e", { webhook: { secret: ""}});
+  const signature = sign(Buffer.from(githubPushBody), secret);
+  const endpoint = new SendEndpoint("e", { webhook: { secret } });
   const interceptor = new GithubHookInterceptor();
 
   const ctx = new TestContext({
@@ -22,11 +23,32 @@ test("github", async t => {
     body: githubPushBody
   });
 
-  await interceptor.receive(endpoint, (ctx, a, b, c) => {}, ctx, 1, 2, 3);
+  await interceptor.receive(endpoint, (ctx) => { }, ctx);
 
-  t.is(ctx.code, 401);
+  t.pass();
 });
 
+test("github missing signature header", async t => {
+  const endpoint = new SendEndpoint("e", { webhook: { secret } });
+  const interceptor = new GithubHookInterceptor();
+
+  const ctx = new TestContext({
+    headers: {
+      "content-type": "application/json",
+      "X-GitHub-Delivery": "7453c7ec-5fa2-11e9-9af1-60fccbf37b5b",
+      "X-GitHub-Event": "push"
+    },
+    body: githubPushBody
+  });
+
+  try {
+    await interceptor.receive(endpoint, (ctx) => { }, ctx);
+  }
+  catch(e) {
+    t.log(e);
+    t.pass();
+  }
+});
 
 const githubPushBody = JSON.stringify({
   ref: "refs/heads/template-sync-1",

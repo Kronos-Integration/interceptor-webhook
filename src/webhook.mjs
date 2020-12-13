@@ -18,6 +18,10 @@ export class GithubHookInterceptor extends Interceptor {
       "x-github-delivery"
     ]);
 
+    if (!sig) {
+      throw "x-hub-signature is missing";
+    }
+
     const body = await rawBody(ctx.req);
 
     if (!verify(sig, body, secret)) {
@@ -75,7 +79,7 @@ function headers(ctx, names) {
   });
 }
 
-function sign(data, secret) {
+export function sign(data, secret) {
   return "sha1=" + createHmac("sha1", secret).update(data).digest("hex");
 }
 
