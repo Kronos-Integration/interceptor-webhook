@@ -1,14 +1,13 @@
 import test from "ava";
 import { TestContext } from "./helpers/context.mjs";
-import signer from "x-hub-signature/src/signer.js";
+import { signer } from "./helpers/signer.mjs";
 import { SendEndpoint } from "@kronos-integration/endpoint";
 import { GithubHookInterceptor } from "@kronos-integration/interceptor-webhook";
 
 export const secret = "aSecret";
 
 test("github", async t => {
-  const sign = signer({ algorithm: "sha1", secret });
-  const signature = sign(Buffer.from(githubPushBody));
+  const signature = signer( Buffer.from(githubPushBody), "sha1", secret);
 
   const endpoint = new SendEndpoint("e", { webhook: { secret: ""}});
   const interceptor = new GithubHookInterceptor();
