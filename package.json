@@ -28,10 +28,10 @@
     "lint:docs": "documentation lint ./src/webhook.mjs"
   },
   "dependencies": {
-    "@kronos-integration/interceptor": "^10.2.0"
+    "@kronos-integration/interceptor": "^10.2.1"
   },
   "devDependencies": {
-    "@kronos-integration/endpoint": "^9.3.0",
+    "@kronos-integration/endpoint": "^9.3.2",
     "ava": "^3.14.0",
     "c8": "^7.3.5",
     "documentation": "github:arlac77/documentation",
