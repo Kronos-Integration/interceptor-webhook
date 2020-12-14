@@ -10,8 +10,8 @@ export const secret = "aSecret";
 
 test("github", async t => {
   const signature = sign(Buffer.from(githubPushBody), secret);
-  const endpoint = new SendEndpoint("e", { webhook: { secret } });
-  const interceptor = new GithubHookInterceptor();
+  const endpoint = new SendEndpoint("e",);
+  const interceptor = new GithubHookInterceptor({ secret });
 
   const ctx = new TestContext({
     headers: {

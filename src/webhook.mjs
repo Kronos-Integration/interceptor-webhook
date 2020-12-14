@@ -1,5 +1,6 @@
 import { createHmac } from "crypto";
 import { Interceptor } from "@kronos-integration/interceptor";
+import { mergeAttributes, createAttributes } from "model-attributes";
 
 /**
  *
@@ -9,9 +10,20 @@ export class GithubHookInterceptor extends Interceptor {
     return "github-webhook";
   }
 
-  async receive(endpoint, next, ctx) {
-    const secret = endpoint.owner.webhook.secret;
+  static get configurationAttributes() {
+    return mergeAttributes(
+      createAttributes({
+        secret: {
+          description: "secret to authorize request",
+          type: "string",
+          private: true
+        }
+      }),
+      super.configurationAttributes
+    );
+  }
 
+  async receive(endpoint, next, ctx) {
     const [sig, event, id] = headers(ctx, [
       "x-hub-signature",
       "x-github-event",
@@ -24,7 +36,7 @@ export class GithubHookInterceptor extends Interceptor {
 
     const body = await rawBody(ctx.req);
 
-    if (!verify(sig, body, secret)) {
+    if (!verify(sig, body, this.secret)) {
       throw "x-hub-signature does not match blob signature";
     }
 

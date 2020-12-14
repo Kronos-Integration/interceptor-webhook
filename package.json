@@ -28,7 +28,8 @@
     "lint:docs": "documentation lint ./src/webhook.mjs"
   },
   "dependencies": {
-    "@kronos-integration/interceptor": "^10.2.1"
+    "@kronos-integration/interceptor": "^10.2.1",
+    "model-attributes": "^4.1.8"
   },
   "devDependencies": {
     "@kronos-integration/endpoint": "^9.3.2",
