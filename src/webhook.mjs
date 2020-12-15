@@ -31,19 +31,25 @@ export class GithubHookInterceptor extends Interceptor {
     ]);
 
     if (!sig) {
-      throw "x-hub-signature is missing";
+      ctx.throw(401, "x-hub-signature is missing");
     }
 
     const body = await rawBody(ctx.req);
 
     if (!verify(sig, body, this.secret)) {
-      throw "x-hub-signature does not match blob signature";
+      ctx.throw(403, "x-hub-signature does not match blob signature");
     }
 
-    return next(JSON.parse(body.toString()), event);
+    const response = await next(JSON.parse(body.toString()), event);
+
+    ctx.res.writeHead(200, RESPONSE_HEADERS);
+    ctx.res.end(JSON.stringify(response));
   }
 }
 
+/**
+ * 
+ */
 export class GiteaHookInterceptor extends Interceptor {
   static get name() {
     return "gitea-webhook";
@@ -56,17 +62,23 @@ export class GiteaHookInterceptor extends Interceptor {
     const data = JSON.parse(body.toString());
 
     if (this.secret !== data.secret) {
-      throw "incorrect credentials";
+      ctx.throw(401, "incorrect credentials");
     }
 
     if (!verify(sig, body, this.secret)) {
-      throw "x-hub-signature does not match blob signature";
+      ctx.throw(403, "x-hub-signature does not match blob signature");
     }
 
-    return next(data, event);
+    const response = await next(data, event);
+
+    ctx.res.writeHead(200, RESPONSE_HEADERS);
+    ctx.res.end(JSON.stringify(response));
   }
 }
 
+/**
+ * 
+ */
 export class BitbucketHookInterceptor extends Interceptor {
   static get name() {
     return "bitbucket-webhook";
@@ -77,7 +89,11 @@ export class BitbucketHookInterceptor extends Interceptor {
     const body = await rawBody(ctx.req);
     const data = JSON.parse(body.toString());
 
-    return next(data, event);
+    const response = await next(data, event);
+
+    ctx.res.writeHead(200, RESPONSE_HEADERS);
+
+    ctx.res.end(JSON.stringify(response));
   }
 }
 
@@ -106,3 +122,8 @@ async function rawBody(req) {
   }
   return chunks.join("");
 }
+
+
+const RESPONSE_HEADERS = {
+  "content-type": "application/json"
+};

@@ -10,7 +10,7 @@ export const secret = "aSecret";
 
 test("github", async t => {
   const signature = sign(Buffer.from(githubPushBody), secret);
-  const endpoint = new SendEndpoint("e",);
+  const endpoint = new SendEndpoint("e");
   const interceptor = new GithubHookInterceptor({ secret });
 
   const ctx = new TestContext({
@@ -30,13 +30,17 @@ test("github", async t => {
     (data, event) => {
       myData = data;
       myEvent = event;
+      return { done: true };
     },
     ctx
   );
 
   t.is(myEvent, "push");
   t.is(myData.repository.name, "npm-template-sync-github-hook");
-  t.pass();
+
+  t.is(ctx.code, 200);
+  t.is(ctx.headers["content-type"], "application/json");
+  t.deepEqual(JSON.parse(ctx.end), { done: true });
 });
 
 test("github missing signature header", async t => {
@@ -56,7 +60,8 @@ test("github missing signature header", async t => {
     await interceptor.receive(endpoint, (data, event) => {}, ctx);
   } catch (e) {
     t.log(e);
-    t.pass();
+
+    t.is(ctx.code, 401);
   }
 });
 
