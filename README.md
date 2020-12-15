@@ -18,8 +18,18 @@
 ### Table of Contents
 
 -   [GithubHookInterceptor](#githubhookinterceptor)
+-   [GiteaHookInterceptor](#giteahookinterceptor)
+-   [BitbucketHookInterceptor](#bitbuckethookinterceptor)
 
 ## GithubHookInterceptor
+
+**Extends Interceptor**
+
+## GiteaHookInterceptor
+
+**Extends Interceptor**
+
+## BitbucketHookInterceptor
 
 **Extends Interceptor**
 
