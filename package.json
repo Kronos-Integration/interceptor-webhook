@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@kronos-integration/interceptor": "^10.2.9",
-    "model-attributes": "^4.1.11"
+    "model-attributes": "^4.1.12"
   },
   "devDependencies": {
     "@kronos-integration/endpoint": "^9.4.7",
