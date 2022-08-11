@@ -28,11 +28,11 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "dependencies": {
-    "@kronos-integration/interceptor": "^10.2.25",
+    "@kronos-integration/interceptor": "^10.2.26",
     "model-attributes": "^4.1.18"
   },
   "devDependencies": {
-    "@kronos-integration/endpoint": "^9.4.32",
+    "@kronos-integration/endpoint": "^9.4.33",
     "ava": "^4.3.1",
     "c8": "^7.12.0",
     "documentation": "^13.2.5",
