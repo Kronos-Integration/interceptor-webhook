@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kronos-Integration/interceptor-webhook.git"
+    "url": "https://github.com/Kronos-Integration/interceptor-webhook"
   },
   "bugs": {
     "url": "https://github.com/Kronos-Integration/interceptor-webhook/issues"
