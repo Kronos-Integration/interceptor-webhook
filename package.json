@@ -32,7 +32,7 @@
     "model-attributes": "^4.2.2"
   },
   "devDependencies": {
-    "@kronos-integration/endpoint": "^9.4.41",
+    "@kronos-integration/endpoint": "^9.4.42",
     "ava": "^5.2.0",
     "c8": "^7.13.0",
     "documentation": "^14.0.1",
