@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
 import { Interceptor } from "@kronos-integration/interceptor";
-import { mergeAttributes, createAttributes } from "model-attributes";
+import { mergeAttributeDefinitions, prepareAttributesDefinitions } from "pacc";
 
 /**
  *
@@ -11,8 +11,8 @@ export class GithubHookInterceptor extends Interceptor {
   }
 
   static get configurationAttributes() {
-    return mergeAttributes(
-      createAttributes({
+    return mergeAttributeDefinitions(
+      prepareAttributesDefinitions({
         secret: {
           description: "secret to authorize request",
           type: "string",
