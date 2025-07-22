@@ -1,6 +1,6 @@
 import { createHmac } from "crypto";
 import { Interceptor } from "@kronos-integration/interceptor";
-import { mergeAttributeDefinitions, prepareAttributesDefinitions } from "pacc";
+import { prepareAttributesDefinitions, secret_attribute } from "pacc";
 
 /**
  *
@@ -10,18 +10,15 @@ export class GithubHookInterceptor extends Interceptor {
     return "github-webhook";
   }
 
-  static get configurationAttributes() {
-    return mergeAttributeDefinitions(
-      prepareAttributesDefinitions({
-        secret: {
-          description: "secret to authorize request",
-          type: "string",
-          private: true
-        }
-      }),
-      super.configurationAttributes
-    );
-  }
+  static attributes = prepareAttributesDefinitions(
+    {
+      secret: {
+        ...secret_attribute,
+        description: "secret to authorize request"
+      }
+    },
+    Interceptor.attributes
+  );
 
   async receive(endpoint, next, ctx) {
     const [sig, event, id] = headers(ctx, [
@@ -48,7 +45,7 @@ export class GithubHookInterceptor extends Interceptor {
 }
 
 /**
- * 
+ *
  */
 export class GiteaHookInterceptor extends Interceptor {
   static get name() {
@@ -77,7 +74,7 @@ export class GiteaHookInterceptor extends Interceptor {
 }
 
 /**
- * 
+ *
  */
 export class BitbucketHookInterceptor extends Interceptor {
   static get name() {
@@ -122,7 +119,6 @@ async function rawBody(req) {
   }
   return chunks.join("");
 }
-
 
 const RESPONSE_HEADERS = {
   "content-type": "application/json"
