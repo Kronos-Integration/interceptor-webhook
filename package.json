@@ -28,7 +28,7 @@
     "lint:docs": "documentation lint ./src/**/*.mjs"
   },
   "dependencies": {
-    "@kronos-integration/interceptor": "^12.1.2",
+    "@kronos-integration/interceptor": "^12.1.4",
     "pacc": "^4.5.3"
   },
   "devDependencies": {
