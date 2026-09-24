@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@kronos-integration/interceptor": "^13.4.6",
-    "pacc": "^11.17.1"
+    "pacc": "^11.17.5"
   },
   "devDependencies": {
     "@kronos-integration/endpoint": "^11.2.3",
